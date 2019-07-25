@@ -1,0 +1,61 @@
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\usepackage[scaled]{helvet}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage[T1]{fontenc}
+\usepackage{etoolbox,xparse,environ}
+
+% margins
+\usepackage[margin=2.25cm]{geometry}
+
+% tables, links etc
+\usepackage{tabu,longtable}
+\usepackage{hyperref}
+
+% drawings
+\usepackage{tikz}
+\usetikzlibrary{shapes.misc,shadows}
+
+% Chapter titling
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}{}{0pt}{\Huge}
+\titleformat{\section}[display]
+  {\normalfont\bfseries}{}{0pt}{\Large}
+  
+  
+% misc
+\usepackage{lipsum}
+
+% programme
+\DeclareDocumentCommand{\day}{m}{%
+    \hfill\\\textbf{\LARGE{#1}}\hfill%
+}
+
+
+\NewEnviron{sessions}{%
+	\begin{longtabu}[t]{@{}lX[5,l,p]@{}}%
+		\BODY%
+	\end{longtabu}%
+}
+
+% \session{time}{name}[chair]
+\DeclareDocumentCommand{\session}{m m o}{%
+    \begin{tikzpicture}[baseline=(char.base)]%
+    \node(char)[draw,fill=white,%
+      shape=rounded rectangle,%
+      drop shadow={opacity=.1},%
+      minimum width=1.8cm]%
+      {#1};%
+    \end{tikzpicture} & \large{\textbf{#2}} \\%
+    \IfValueT{#3}{& \textit{Session chair: #3}\\[.5cm]}%
+}
+
+% \event{type}{title}[authors]{abstract}
+\DeclareDocumentCommand{\event}{m m o m}{%
+    & \begin{tabu}[t]{@{}X[p]@{}}#2\end{tabu} \IfValueT{#3}{ \\ & \textit{#3}} \\[.15cm]
+    %& \begin{tabu}[t]{@{}X[p]@{}}{\itshape #4}\end{tabu} \\[.5cm]
+}
+
