@@ -30,6 +30,9 @@
 \usepackage{lipsum}
 
 % programme
+\newif\ifshowProgramme
+\showProgrammefalse
+
 \DeclareDocumentCommand{\day}{m}{%
     \hfill\\\textbf{\LARGE{#1}}\hfill%
 }
@@ -53,9 +56,24 @@
     \IfValueT{#3}{& \textit{Session chair: #3}\\[.5cm]}%
 }
 
-% \event{type}{title}[authors]{abstract}
+% \event{type}{title}[authors]{id}
 \DeclareDocumentCommand{\event}{m m o m}{%
-    & \begin{tabu}[t]{@{}X[p]@{}}#2\end{tabu} \IfValueT{#3}{ \\ & \textit{#3}} \\[.15cm]
+    & \begin{tabu}[t]{@{}X[p]@{}}{#2}\vspace{.15cm} \\ {\itshape #3}\vspace{.25cm}\end{tabu} \\[.25cm]
     %& \begin{tabu}[t]{@{}X[p]@{}}{\itshape #4}\end{tabu} \\[.5cm]
+}
+
+
+% toc
+\newif\ifshowToC
+\showToCfalse
+\NewEnviron{toc}{%
+	\begin{longtabu}[t]{@{}lX[5,l,p]@{}}%
+		\BODY%
+	\end{longtabu}%
+}
+
+% \tocpaper[id]{title}{authors}
+\DeclareDocumentCommand{\tocpaper}{o m m}{%
+    #1 & \begin{tabu}[t]{@{}X[p]@{}}{#2}\vspace{.15cm} \\ {\itshape #3}\vspace{.25cm}\end{tabu} \\[.25cm]
 }
 
